@@ -1,0 +1,51 @@
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Dht Data</title>
+  <script src="https://cdn.firebase.com/js/client/2.2.5/firebase.js"></script>
+  <script src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1.1','packages':['corechart']}]}"></script>
+  <script>
+  google.setOnLoadCallback(function() {
+
+    var dhtRef = new Firebase("https://webduinodht.firebaseio.com/dht").limit(512),
+      chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+
+    dhtRef.on('value', function(nameSnapshot) {
+      var values = nameSnapshot.val(),
+        data = [
+          ['Time', 'Temperature (C)']
+        ];
+
+      Object.keys(values).forEach(function(key) {
+        var obj = values[key],
+          timeStr = new Date(obj.timestamp).toLocaleTimeString();
+
+        data.push([timeStr.substr(0, timeStr.length - 3), obj.temperature]);
+      });
+
+      drawChart(data);
+    });
+
+    function drawChart(data) {
+      data = google.visualization.arrayToDataTable(data);
+      chart.draw(data, {
+        title: '溫濕度監測',
+        hAxis: {
+          title: '時間',
+          titleTextStyle: {
+            color: '#333'
+          }
+        }
+      });
+    }
+
+  });
+  </script>
+</head>
+
+<body>
+  <div id="chart_div" style="width:100%;height:100%;"></div>
+</body>
+
+</html>
