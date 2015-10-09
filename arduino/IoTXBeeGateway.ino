@@ -5,7 +5,7 @@
 // 指定網路卡 MAC 卡號
 byte mac[] = {  0x00, 0xAA, 0xBB, 0xCC, 0xDE, 0x02 };
 //IPAddress server(10,1,224,2);  // numeric IP for Google (no DNS)
-char server[] = "52.68.108.129";    // name address for Google (using DNS)
+char server[] = "YOUR_IP";    // name address for Google (using DNS)
 
 // 初始化 Ethernet client library
 EthernetClient client;
@@ -73,7 +73,7 @@ void loop() {
       // Make a HTTP request:
       Serial.println("Sending data to IoT server...");
       client.println("POST /iot HTTP/1.1");
-      client.println("Host: 52.68.108.129:3333");
+      client.println("Host: *.*.*.*:3333");
       client.println("Content-Type: application/x-www-form-urlencoded");
       client.print("Content-Length: ");
       String data = "temp=" + String(temp);
