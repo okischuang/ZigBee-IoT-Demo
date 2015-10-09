@@ -39,8 +39,9 @@ app.post('/iot',function(req,res){
 });
 
 //server.listen(3000, function(){
-app.listen(3000, function(){
-	console.log("Server is listening on port 3000");
+var port = 3333;
+app.listen(port, function(){
+        console.log("Server is listening on port ", port);
 });
 
 function drawChart(data) {
